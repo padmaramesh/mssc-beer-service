@@ -1,5 +1,6 @@
 package padma.ramesh.web.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,11 +21,11 @@ import java.util.UUID;
  * Created by ramesh.padma on 25-06-2020.
  */
 @RequestMapping("/api/v1/beer")
+@RequiredArgsConstructor
 @RestController
 public class BeerController {
 
-    @Autowired
-    BeerService beerService;
+    private final BeerService beerService;
 
     @GetMapping("/{beerId}")
     public ResponseEntity<BeerDto> getBeerById(@PathVariable("beerId") UUID beerId) throws NotFoundException {

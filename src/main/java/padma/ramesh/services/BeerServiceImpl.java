@@ -1,6 +1,8 @@
 package padma.ramesh.services;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import padma.ramesh.domain.Beer;
 import padma.ramesh.exceptions.NotFoundException;
 import padma.ramesh.repositories.BeerRespository;
@@ -9,13 +11,13 @@ import padma.ramesh.web.model.BeerDto;
 
 import java.util.UUID;
 
+@RequiredArgsConstructor
+@Service
 public class BeerServiceImpl implements BeerService {
 
-    @Autowired
-    BeerRespository beerRespository;
+    private final BeerRespository beerRespository;
 
-    @Autowired
-    BeerMapper beerMapper;
+    private final BeerMapper beerMapper;
 
     @Override
     public BeerDto getById(UUID beerId) throws NotFoundException {
