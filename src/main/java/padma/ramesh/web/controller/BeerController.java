@@ -1,10 +1,13 @@
 package padma.ramesh.web.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import padma.ramesh.exceptions.NotFoundException;
+import padma.ramesh.services.BeerService;
 import padma.ramesh.web.model.BeerDto;
 
 import javax.validation.ConstraintViolationException;
@@ -20,32 +23,25 @@ import java.util.UUID;
 @RestController
 public class BeerController {
 
+    @Autowired
+    BeerService beerService;
+
     @GetMapping("/{beerId}")
-    public ResponseEntity<BeerDto> getBeerById(@PathVariable("beerId") UUID beerId){
-        //todo impl
-        return new ResponseEntity<>(BeerDto.builder().build(), HttpStatus.OK);
+    public ResponseEntity<BeerDto> getBeerById(@PathVariable("beerId") UUID beerId) throws NotFoundException {
+        return new ResponseEntity<>(beerService.getById(beerId),  HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity saveNewBeer(@Valid @RequestBody BeerDto beerDto){
-        //Todo impl
+
+        beerService.saveNewBeer(beerDto);
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
     @PutMapping("/{beerId}")
-    public ResponseEntity updateBeerById(@PathVariable("beerId") UUID beerId,@ Valid  @RequestBody BeerDto beerDto){
-
-        //TODO IMPL
+    public ResponseEntity updateBeerById(@PathVariable("beerId") UUID beerId,@ Valid  @RequestBody BeerDto beerDto) throws NotFoundException {
+        beerService.updateBeer(beerId,beerDto);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
-   /* @ExceptionHandler(Exception.class)
-   public ResponseEntity<String> handleError(MethodArgumentNotValidException e){
- *//*        List<String> errors = new ArrayList<>(e.get().size());
 
-        e.getConstraintViolations().forEach(constraintViolation -> {
-            errors.add(constraintViolation.getPropertyPath() + " : " + constraintViolation.getMessage());
-        });*//*
-
-        return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
-    }*/
 }
