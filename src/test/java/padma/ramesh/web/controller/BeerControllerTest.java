@@ -14,6 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import padma.ramesh.bootstrap.BeerLoader;
 import padma.ramesh.services.BeerService;
 import padma.ramesh.web.model.BeerDto;
 import padma.ramesh.web.model.BeerStyleEnum;
@@ -78,7 +79,7 @@ class BeerControllerTest {
                 .beerName("KingFisher")
                 .beerStyle(BeerStyleEnum.ALE)
                 .price(new BigDecimal(2.99))
-                .upc(12344444L)
+                .upc(BeerLoader.BEER_1_UPC)
                 .build();
     }
 }
